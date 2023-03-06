@@ -1,15 +1,5 @@
-# interpreter
+# Basic compiler/interpreter
 
-To install dependencies:
+A toy implementation of compiler/interpreter in typescript.
 
-```bash
-bun install
-```
-
-To run:
-
-```bash
-bun run index.ts
-```
-
-This project was created using `bun init` in bun v0.4.3. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+Main purpose of this project is to learn how a compiler/interpreter works under the hood using lexer, parsers, ast etc.
