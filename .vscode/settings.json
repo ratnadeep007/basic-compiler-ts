@@ -1,0 +1,5 @@
+{
+    "editor.indentSize": 2,
+    "typescript.format.enable": true,
+    "editor.formatOnSave": true,
+}

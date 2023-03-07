@@ -1,4 +1,4 @@
-import { Stmt, Program, Expr, BinaryExpr, NumericLiteral, Identifier } from "./ast.js";
+import { Stmt, Program, Expr, BinaryExpr, NumericLiteral, Identifier, NullLiteral } from "./ast.js";
 import { tokenize, Token, TokenType } from "./lexer.js";
 
 export default class Parser {
@@ -82,6 +82,9 @@ export default class Parser {
           "Unexpected token found inside parenthesised expression. Expected closing parenthesis"
         ); // eat closing paren
         return value;
+      case TokenType.Null:
+        this.eat(); // advance past null keyword
+        return { kind: "NullLiteral", value: "null" } as NullLiteral;
       default:
         console.log("Unexpected token found during parsing: ", this.at());
         process.exit(1);
