@@ -1,7 +1,10 @@
 export type NodeType =
+  // STATEMENT
   | "Program"
+  | "VarDeclaration"
+
+  // Expression
   | "NumericLiteral"
-  | "NullLiteral"
   | "Identifier"
   | "BinaryExpr";
 
@@ -14,7 +17,14 @@ export interface Program extends Stmt {
   body: Stmt[];
 }
 
-export interface Expr extends Stmt {}
+export interface VarDeclaration extends Stmt {
+  kind: "VarDeclaration";
+  constant: boolean;
+  identifier: string;
+  value?: Expr;
+}
+
+export interface Expr extends Stmt { }
 
 export interface BinaryExpr extends Expr {
   kind: "BinaryExpr";
@@ -31,9 +41,4 @@ export interface Identifier extends Expr {
 export interface NumericLiteral extends Expr {
   kind: "NumericLiteral";
   value: number;
-}
-
-export interface NullLiteral extends Expr {
-  kind: "NullLiteral",
-  value: "null"
 }

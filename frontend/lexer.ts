@@ -1,5 +1,4 @@
 export enum TokenType {
-  Null,
   Number,
   Identifier,
   Equals,
@@ -17,7 +16,6 @@ export interface Token {
 
 const KEYWORDS: Record<string, TokenType> = {
   "let": TokenType.Let,
-  "null": TokenType.Null,
 }
 
 function token(value = "", type: TokenType): Token {
@@ -41,8 +39,8 @@ function isskippable(str: string) {
 export function tokenize(sourceCode: string): Token[] {
   const tokens = new Array<Token>();
   const src = sourceCode.split("");
-  
-  while(src.length > 0) {
+
+  while (src.length > 0) {
     if (src[0] === "(") {
       tokens.push(token(src.shift(), TokenType.OpenParen));
     } else if (src[0] === ")") {
@@ -54,7 +52,7 @@ export function tokenize(sourceCode: string): Token[] {
     } else {
       if (isint(src[0])) {
         let num = "";
-        while(src.length > 0 && isint(src[0])) {
+        while (src.length > 0 && isint(src[0])) {
           num += src.shift();
         }
         tokens.push(token(num, TokenType.Number));
@@ -79,7 +77,7 @@ export function tokenize(sourceCode: string): Token[] {
 
   }
 
-  tokens.push({ type: TokenType.EOF, value: "EndOfFile" }) 
+  tokens.push({ type: TokenType.EOF, value: "EndOfFile" })
 
   return tokens;
 }
