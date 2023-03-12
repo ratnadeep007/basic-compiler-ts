@@ -3,10 +3,12 @@ export enum TokenType {
   Identifier,
   Equals,
   Let,
+  Const,
   OpenParen,
   CloseParen,
   BinaryOperator,
   EOF,
+  SemiColon
 }
 
 export interface Token {
@@ -16,6 +18,7 @@ export interface Token {
 
 const KEYWORDS: Record<string, TokenType> = {
   "let": TokenType.Let,
+  "const": TokenType.Const,
 }
 
 function token(value = "", type: TokenType): Token {
@@ -49,6 +52,8 @@ export function tokenize(sourceCode: string): Token[] {
       tokens.push(token(src.shift(), TokenType.BinaryOperator));
     } else if (src[0] === "=") {
       tokens.push(token(src.shift(), TokenType.Equals));
+    } else if (src[0] === ";") {
+      tokens.push(token(src.shift(), TokenType.SemiColon));
     } else {
       if (isint(src[0])) {
         let num = "";
