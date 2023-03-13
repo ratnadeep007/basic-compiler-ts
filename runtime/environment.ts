@@ -1,10 +1,20 @@
-import { MK_BOOL, MK_NULL, RuntimeVal } from "./values.js";
+import { MK_BOOL, MK_NATIVE_FN, MK_NULL, MK_NUMBER, RuntimeVal } from "./values.js";
 
 export function createGlobalEnv() {
   const env = new Environment();
   env.declarVar("true", MK_BOOL(true), true);
   env.declarVar("false", MK_BOOL(false), true);
   env.declarVar("null", MK_NULL(), true);
+
+  // define a native method
+  env.declarVar("print", MK_NATIVE_FN((args, scope) => {
+    console.log(...args);
+    return MK_NULL();
+  }), true)
+
+  env.declarVar("time", MK_NATIVE_FN((args, scope) => {
+    return MK_NUMBER(Date.now());
+  }), true);
   return env;
 }
 

@@ -1,7 +1,7 @@
-import { AssignmentExpr, BinaryExpr, Identifier, ObjectLiteral } from "../../frontend/ast.js";
+import { AssignmentExpr, BinaryExpr, CallExpr, Identifier, ObjectLiteral } from "../../frontend/ast.js";
 import Environment from "../environment.js";
 import { evaluate } from "../interpreter.js";
-import { RuntimeVal, NumberVal, MK_NULL, ObjectVal } from "../values.js";
+import { RuntimeVal, NumberVal, MK_NULL, ObjectVal, NativeFnValue } from "../values.js";
 
 export function eval_binary_expr(binop: BinaryExpr, env: Environment): RuntimeVal {
   const lhs = evaluate(binop.left, env);
@@ -56,4 +56,18 @@ export function eval_object_expr(obj: ObjectLiteral, env: Environment): RuntimeV
   }
 
   return object;
+}
+
+export function eval_call_expr(expr: CallExpr, env: Environment): RuntimeVal {
+  const args = expr.args.map((arg) => evaluate(arg, env));
+  const fn = evaluate(expr.caller, env);
+
+  if (fn.type !== "native-fn") {
+    throw "Cannot call value that is not a function" + JSON.stringify(fn);
+  }
+
+  const result = (fn as NativeFnValue).call(args, env);
+
+
+  return result;
 }

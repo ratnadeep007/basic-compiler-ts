@@ -12,5 +12,5 @@ async function run_file(filepath: string) {
   const input = (await fs.readFile(filepath)).toString();
   const program = parser.produceAST(input || "");
   const result = evaluate(program, env);
-  console.log(result);
+  // console.log(result);
 }

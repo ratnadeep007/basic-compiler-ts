@@ -2,5 +2,6 @@ const a = 45 / 2;
 
 const obj = { x: 100, y: 200, z: { a, b: true } };
 
-print(foo)
-foo = obj.foo(bar(x, y)) + 5
+let foo = 30;
+print(foo, 45)
+print(time())
