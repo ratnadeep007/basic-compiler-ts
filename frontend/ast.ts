@@ -3,13 +3,17 @@ export type NodeType =
   | "Program"
   | "VarDeclaration"
 
+  // Expression
+  | "AssignmentExpr"
+  | "MemberExpr"
+  | "CallExpr"
+
   // Literals
   | "Property"
   | "ObjectLiteral"
   | "NumericLiteral"
   | "Identifier"
-  | "BinaryExpr"
-  | "AssignmentExpr";
+  | "BinaryExpr";
 
 export interface Stmt {
   kind: NodeType;
@@ -61,4 +65,17 @@ export interface Property extends Expr {
 export interface ObjectLiteral extends Expr {
   kind: "ObjectLiteral";
   properties: Property[];
+}
+
+export interface CallExpr extends Expr {
+  kind: "CallExpr";
+  args: Expr[];
+  caller: Expr;
+}
+
+export interface MemberExpr extends Expr {
+  kind: "MemberExpr";
+  object: Expr;
+  property: Expr;
+  computed: boolean;
 }
