@@ -3,7 +3,9 @@ export type NodeType =
   | "Program"
   | "VarDeclaration"
 
-  // Expression
+  // Literals
+  | "Property"
+  | "ObjectLiteral"
   | "NumericLiteral"
   | "Identifier"
   | "BinaryExpr"
@@ -48,4 +50,15 @@ export interface AssignmentExpr extends Expr {
   kind: "AssignmentExpr";
   assigne: Expr;
   value: Expr;
+}
+
+export interface Property extends Expr {
+  kind: "Property";
+  key: string;
+  value?: Expr;
+}
+
+export interface ObjectLiteral extends Expr {
+  kind: "ObjectLiteral";
+  properties: Property[];
 }

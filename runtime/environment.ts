@@ -1,4 +1,12 @@
-import { RuntimeVal } from "./values.js";
+import { MK_BOOL, MK_NULL, RuntimeVal } from "./values.js";
+
+export function createGlobalEnv() {
+  const env = new Environment();
+  env.declarVar("true", MK_BOOL(true), true);
+  env.declarVar("false", MK_BOOL(false), true);
+  env.declarVar("null", MK_NULL(), true);
+  return env;
+}
 
 export default class Environment {
   private parent?: Environment;
@@ -6,6 +14,7 @@ export default class Environment {
   private constants: Set<string>;
 
   constructor(parentENV?: Environment) {
+    const global = parentENV ? true : false;
     this.parent = parentENV;
     this.variables = new Map();
     this.constants = new Set();
