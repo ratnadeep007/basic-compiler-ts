@@ -1,5 +1,6 @@
 import { RuntimeVal, NumberVal, NullVal } from "./values.js";
 import {
+  AssignmentExpr,
   BinaryExpr,
   Identifier,
   NumericLiteral,
@@ -8,7 +9,7 @@ import {
   VarDeclaration
 } from "../frontend/ast.js";
 import Environment from "./environment.js";
-import { eval_identifier, eval_binary_expr } from "./eval/expressions.js";
+import { eval_identifier, eval_binary_expr, eval_assignment } from "./eval/expressions.js";
 import { eval_program, eval_var_decleration } from "./eval/statements.js";
 
 export function evaluate(astNode: Stmt, env: Environment): RuntimeVal {
@@ -26,6 +27,8 @@ export function evaluate(astNode: Stmt, env: Environment): RuntimeVal {
       return eval_program(astNode as Program, env);
     case "VarDeclaration":
       return eval_var_decleration(astNode as VarDeclaration, env);
+    case "AssignmentExpr":
+      return eval_assignment(astNode as AssignmentExpr, env);
     default:
       console.error("AST not setup for interpretation.", astNode);
       process.exit(0);

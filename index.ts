@@ -8,10 +8,9 @@ repl();
 function repl() {
   const parser = new Parser();
   const env = new Environment();
-  env.declarVar("x", MK_NUMBER(100), true);
-  env.declarVar("true", MK_BOOL(true), false);
-  env.declarVar("false", MK_BOOL(false), false);
-  env.declarVar("null", MK_NULL(), false);
+  env.declarVar("true", MK_BOOL(true), true);
+  env.declarVar("false", MK_BOOL(false), true);
+  env.declarVar("null", MK_NULL(), true);
   console.log("repl v0.1");
 
   while (true) {

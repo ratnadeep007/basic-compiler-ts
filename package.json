@@ -2,6 +2,9 @@
   "name": "interpreter",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "repl": "bun run index.ts"
+  },
   "devDependencies": {
     "bun-types": "^0.4.0"
   }

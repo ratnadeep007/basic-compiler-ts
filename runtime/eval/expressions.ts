@@ -1,4 +1,4 @@
-import { BinaryExpr, Identifier } from "../../frontend/ast.js";
+import { AssignmentExpr, BinaryExpr, Identifier } from "../../frontend/ast.js";
 import Environment from "../environment.js";
 import { evaluate } from "../interpreter.js";
 import { RuntimeVal, NumberVal, MK_NULL } from "../values.js";
@@ -38,4 +38,12 @@ export function eval_number_binary_expr(
 export function eval_identifier(ident: Identifier, env: Environment): RuntimeVal {
   const val = env.lookupVar(ident.symbol);
   return val;
+}
+
+export function eval_assignment(node: AssignmentExpr, env: Environment): RuntimeVal {
+  if (node.assigne.kind != "Identifier") {
+    throw `Invalid assignment for type: ${node.assigne.kind}`;
+  }
+  const varname = (node.assigne as Identifier).symbol;
+  return env.assignVar(varname, evaluate(node.value, env));
 }
