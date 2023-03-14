@@ -4,6 +4,7 @@ export enum TokenType {
   Equals,
   Let,
   Const,
+  Fn,
   OpenParen, // (
   CloseParen, // )
   BinaryOperator,
@@ -26,6 +27,7 @@ export interface Token {
 const KEYWORDS: Record<string, TokenType> = {
   "let": TokenType.Let,
   "const": TokenType.Const,
+  "fn": TokenType.Fn,
 }
 
 function token(value = "", type: TokenType): Token {

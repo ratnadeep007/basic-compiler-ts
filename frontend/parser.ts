@@ -1,4 +1,18 @@
-import { Stmt, Program, Expr, BinaryExpr, NumericLiteral, Identifier, VarDeclaration, AssignmentExpr, Property, ObjectLiteral, CallExpr, MemberExpr } from "./ast.js";
+import {
+  Stmt,
+  Program,
+  Expr,
+  BinaryExpr,
+  NumericLiteral,
+  Identifier,
+  VarDeclaration,
+  AssignmentExpr,
+  Property,
+  ObjectLiteral,
+  CallExpr,
+  MemberExpr,
+  FunctionDeclaration
+} from "./ast.js";
 import { tokenize, Token, TokenType } from "./lexer.js";
 
 export default class Parser {
@@ -32,9 +46,43 @@ export default class Parser {
       case TokenType.Let:
       case TokenType.Const:
         return this.parse_var_decleration();
+      case TokenType.Fn:
+        return this.parse_fn_decleration();
       default:
         return this.parse_expr();
     }
+  }
+
+  private parse_fn_decleration(): Stmt {
+    this.eat();
+    const name = this.expect(TokenType.Identifier, "Expected function name following fn keyword").value;
+    const args = this.parse_args();
+    const params: string[] = [];
+    for (const arg of args) {
+      if (arg.kind !== "Identifier") {
+        console.log(arg);
+        throw "Expected function decleration expected parameter to be of type string";
+      }
+      params.push((arg as Identifier).symbol);
+    }
+
+    this.expect(TokenType.OpenBrace, "Expected function body decleration");
+
+    const body: Stmt[] = [];
+
+    while (this.at().type !== TokenType.EOF && this.at().type !== TokenType.CloseBrace) {
+      body.push(this.parse_stmt());
+    }
+
+    this.expect(TokenType.CloseBrace, "Expected function body end by closing brances");
+    const fn = {
+      body,
+      name,
+      parameters: params,
+      kind: "FunctionDeclaration"
+    } as FunctionDeclaration;
+
+    return fn;
   }
 
   parse_var_decleration(): Stmt {

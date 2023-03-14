@@ -3,6 +3,7 @@ import {
   AssignmentExpr,
   BinaryExpr,
   CallExpr,
+  FunctionDeclaration,
   Identifier,
   NumericLiteral,
   ObjectLiteral,
@@ -12,7 +13,7 @@ import {
 } from "../frontend/ast.js";
 import Environment from "./environment.js";
 import { eval_identifier, eval_binary_expr, eval_assignment, eval_object_expr, eval_call_expr } from "./eval/expressions.js";
-import { eval_program, eval_var_decleration } from "./eval/statements.js";
+import { eval_function_decleration, eval_program, eval_var_decleration } from "./eval/statements.js";
 
 export function evaluate(astNode: Stmt, env: Environment): RuntimeVal {
   // console.log("astnode", astNode);
@@ -36,6 +37,8 @@ export function evaluate(astNode: Stmt, env: Environment): RuntimeVal {
       return eval_object_expr(astNode as ObjectLiteral, env);
     case "CallExpr":
       return eval_call_expr(astNode as CallExpr, env);
+    case "FunctionDeclaration":
+      return eval_function_decleration(astNode as FunctionDeclaration, env);
     default:
       console.error("AST not setup for interpretation.", astNode);
       process.exit(0);

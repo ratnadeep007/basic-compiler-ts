@@ -1,7 +1,10 @@
+import Environment from "../runtime/environment.js";
+
 export type NodeType =
   // STATEMENT
   | "Program"
   | "VarDeclaration"
+  | "FunctionDeclaration"
 
   // Expression
   | "AssignmentExpr"
@@ -29,6 +32,13 @@ export interface VarDeclaration extends Stmt {
   constant: boolean;
   identifier: string;
   value?: Expr;
+}
+
+export interface FunctionDeclaration extends Stmt {
+  kind: "FunctionDeclaration";
+  parameters: string[];
+  name: string;
+  body: Stmt[];
 }
 
 export interface Expr extends Stmt { }

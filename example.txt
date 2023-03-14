@@ -1,7 +1,10 @@
-const a = 45 / 2;
+fn makeAdder(offset) {
+  fn add (x, y) {
+    x + y + offset
+  }
 
-const obj = { x: 100, y: 200, z: { a, b: true } };
+  add
+}
 
-let foo = 30;
-print(foo, 45)
-print(time())
+const adder = makeAdder(1);
+print(adder(10, 5))
